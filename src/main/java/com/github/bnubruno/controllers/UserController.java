@@ -1,36 +1,42 @@
 package com.github.bnubruno.controllers;
 
-import com.github.bnubruno.entities.User;
+import com.github.bnubruno.dtos.request.CreateUserDTO;
+import com.github.bnubruno.dtos.response.UserDTO;
+import com.github.bnubruno.mappers.UserMapper;
 import com.github.bnubruno.services.UserDetailsService;
-import com.github.bnubruno.dtos.UserDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @AllArgsConstructor
 public class UserController {
 
     private UserDetailsService userDetailsService;
+    private UserMapper userMapper;
 
     @GetMapping("/api/users")
-    public List<User> finalAll() {
-        return userDetailsService.findAll();
-    }
-
-    @GetMapping("/api/me")
-    public Object me() {
-        return SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public List<UserDTO> finalAll() {
+        return userDetailsService.findAll().stream().map(userMapper::map).collect(Collectors.toList());
     }
 
     @PostMapping("/api/users")
-    public UserDTO create(@RequestBody UserDTO dto) {
-        return dto;
+    public UserDTO create(@RequestBody @Valid CreateUserDTO userDTO) {
+        return userMapper.map(userDetailsService.create(userDTO));
+    }
+
+    @GetMapping("/api/me")
+    public UserDTO me() {
+        return userDetailsService.findByUsername(getLoggedUsername()).map(userMapper::map).orElse(null);
+    }
+
+    private String getLoggedUsername() {
+        return ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
     }
 
 }

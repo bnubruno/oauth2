@@ -1,18 +1,18 @@
-package com.github.bnubruno.dtos;
+package com.github.bnubruno.dtos.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 @Data
-public class UserDTO {
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class CreateUserDTO {
 
     private String username;
-    private String password;
     private String email;
+    private String password;
 
 }
