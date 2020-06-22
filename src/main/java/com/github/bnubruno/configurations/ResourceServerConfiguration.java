@@ -26,6 +26,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .antMatchers("/api/users").hasRole("ADMIN")
                 .antMatchers("/api/me").hasRole("USER")
                 .anyRequest().authenticated().and().formLogin().and().httpBasic();
+
     }
 
 }
