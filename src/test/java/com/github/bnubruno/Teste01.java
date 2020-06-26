@@ -7,7 +7,7 @@ public class Teste01 {
 
     @Test
     public void abc() {
-        //Teste 2
+        //Teste
         Assert.assertTrue(true);
     }
 
