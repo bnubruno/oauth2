@@ -51,6 +51,7 @@ public class UserDetailsService implements org.springframework.security.core.use
     }
 
     private Collection<GrantedAuthority> getGrantedAuthorities(User user) {
+        // teste
         return user.getAuthorities().stream()
                 .map(Authority::getName)
                 .map(SimpleGrantedAuthority::new)
