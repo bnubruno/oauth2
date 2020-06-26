@@ -16,6 +16,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: Setup PostgreSQL
+      uses: Harmon758/postgresql-action@v1.0.0
+      with:
+        postgresql version: 11
+        postgresql db: oauth
+        postgresql user: postgres
+        postgresql password: postgres
     - name: Set up JDK 11
       uses: actions/setup-java@v1
       with:
