@@ -20,7 +20,7 @@ jobs:
       uses: Harmon758/postgresql-action@v1.0.0
       with:
         postgresql version: 11
-        postgresql db: oauth
+        postgresql db: auth
         postgresql user: postgres
         postgresql password: postgres
     - name: Set up JDK 11
